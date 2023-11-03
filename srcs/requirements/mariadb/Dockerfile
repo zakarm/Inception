@@ -1,6 +1,11 @@
 FROM debian:bullseye
 
-RUN apt update && apt upgrade && apt install -y mariadb-server vim curl
+RUN apt-get update -y && apt install -y mariadb-server python3 python3-pip
 
-COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN pip3 install mysql-connector-python
 
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+
+COPY /tools/script.py /
+
+CMD ["python3", "script.py"]

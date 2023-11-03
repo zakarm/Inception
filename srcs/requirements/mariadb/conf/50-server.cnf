@@ -7,11 +7,6 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-
-#
-# * Basic Settings
-#
-
 user                    = mysql
 pid-file                = /run/mysqld/mysqld.pid
 basedir                 = /usr
@@ -29,7 +24,7 @@ skip-external-locking
 
 # Instead of skip-networking the default is now to listen only on
 # localhost which is more compatible and is not less secure.
-bind_address=*
+bind_address=0.0.0.0
 
 #
 # * Fine Tuning
@@ -116,4 +111,3 @@ collation-server      = utf8mb4_general_ci
 # This group is only read by MariaDB-10.5 servers.
 # If you use the same .cnf file for MariaDB of different versions,
 # use this group for options that older servers don't understand
-[mariadb-10.5]
