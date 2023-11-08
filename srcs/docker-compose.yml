@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+    nginx:
+        depends_on:
+            - wordpress
+        build: ./requirements/nginx
+        ports:
+            - "443:443"
+        networks:
+            - inception
+        env_file:
+            - .env
+    
+    mariadb:
+        build: ./requirements/wordpress
+        expose:
+            - "3306"
+        networks:
+            - inception
+        env_file:
+            - .env
+
+    wordpress:
+        depends_on:
+            - mariadb
+        build: ./requirements/wordpress
+        expose:
+            - "9000"
+        networks:
+            - inception
+        env_file:
+            - .env
+networks:
+    inception:
+        driver: bridge

@@ -1,14 +1,13 @@
 server
 {
-    listen 443;
-    ssl on;
-    ssl_protocols TLSv1.2 TLSv1.3;
+    listen 443 ssl;
+    ssl_protocols TLSv1.3;
     ssl_certificate /etc/nginx/ssl/inception.crt;
     ssl_certificate_key /etc/nginx/ssl/inception.key;
 
     root /var/www/html;
-    server_name 127.0.0.1;
-    index index.php index.html index.htm;
+    server_name localhost;
+    index index.php index.html index.htm index.nginx-debian.html;
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;

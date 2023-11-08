@@ -1,21 +1,18 @@
-import subprocess
-
-subprocess.run("service mariadb start", shell=True, check=True)
-
-db1_name = "your_db_name"
-db1_user = "your_db_user"
-db1_pwd = "your_db_password"
-sql_script = f"""
-CREATE DATABASE IF NOT EXISTS {db1_name};
-CREATE USER IF NOT EXISTS '{db1_user}'@'%' IDENTIFIED BY '{db1_pwd}';
-GRANT ALL PRIVILEGES ON {db1_name}.* TO '{db1_user}'@'%';
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'oujda';
-FLUSH PRIVILEGES;
-"""
-
-with open("db1.sql", "w") as f:
-    f.write(sql_script)
-
-subprocess.run("mysql < db1.sql", shell=True, check=True)
-subprocess.run("kill $(cat /var/run/mysqld/mysqld.pid)", shell=True, check=True)
-subprocess.run("mysqld", shell=True, check=True)
+import subprocess, os, sys, time
+try:
+    subprocess.run("service mariadb start", shell=True, check=True)
+    time.sleep(1)
+    sql_script = f"""
+    CREATE DATABASE IF NOT EXISTS {os.environ["MYSQL_DATABASE_NAME"]};
+    CREATE USER IF NOT EXISTS '{os.environ["MYSQL_USER"]}'@'%' IDENTIFIED BY '{os.environ["MYSQL_PASSWORD"]}';
+    GRANT ALL PRIVILEGES ON {os.environ["MYSQL_DATABASE_NAME"]}.* TO '{os.environ["MYSQL_USER"]}'@'%';
+    ALTER USER 'root'@'localhost' IDENTIFIED BY '{os.environ["MYSQL_ROOT_PASSWORD"]}';
+    FLUSH PRIVILEGES;
+    """
+    with open("db1.sql", "w") as f: f.write(sql_script)
+    subprocess.run(f"mysql -u root -p'{os.environ['MYSQL_ROOT_PASSWORD']}' < db1.sql", shell=True, check=True)
+    subprocess.run("rm -rf db1.sql", shell=True, check=True)
+    subprocess.run(f"mysqladmin -u root -p{os.environ['MYSQL_ROOT_PASSWORD']} shutdown", shell=True, check=True)
+    subprocess.run(f"mysqld", shell=True, check=True)
+except KeyboardInterrupt:
+    sys.exit(0)
