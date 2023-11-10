@@ -2,9 +2,11 @@ version: '3.8'
 
 services:
     nginx:
+        container_name: nginx
         depends_on:
             - wordpress
         build: ./requirements/nginx
+        restart: on-failure
         ports:
             - "443:443"
         networks:
@@ -13,7 +15,9 @@ services:
             - .env
     
     mariadb:
-        build: ./requirements/wordpress
+        container_name: mariadb
+        build: ./requirements/mariadb
+        restart: unless-stopped
         expose:
             - "3306"
         networks:
@@ -22,9 +26,11 @@ services:
             - .env
 
     wordpress:
+        container_name: wordpress
         depends_on:
             - mariadb
         build: ./requirements/wordpress
+        # restart: on-failure
         expose:
             - "9000"
         networks:
