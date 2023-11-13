@@ -30,7 +30,6 @@ services:
         depends_on:
             - mariadb
         build: ./requirements/wordpress
-        # restart: on-failure
         expose:
             - "9000"
         networks:
