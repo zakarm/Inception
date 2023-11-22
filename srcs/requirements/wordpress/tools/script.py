@@ -1,6 +1,9 @@
 import os, sys, time, subprocess, re
 
+time.sleep (5)
+
 try:
+    subprocess.run("service	php7.4-fpm start", shell = True, check = True)
     file = "/etc/php/7.4/fpm/pool.d/www.conf"
     with open(file, "r") as f: 
         data = f.read()
@@ -16,8 +19,8 @@ try:
     data = re.sub(r'password_here', os.environ['MYSQL_PASSWORD'], data)
     with open(file, "w") as f: 
         f.write(data)
-    # subprocess.run(f"wp config create --dbname={os.environ['MYSQL_DATABASE_NAME']} --dbuser={os.environ['MYSQL_USER']} --dbpass={os.environ['MYSQL_PASSWORD']} --dbhost=mariadb --path=/var/www/html --allow-root", shell=True, check=True)
     subprocess.run(f"wp core install --url={os.environ['WP_URL']} --title={os.environ['WP_TITLE']} --admin_user={os.environ['WP_ADMIN_USER']} --admin_password={os.environ['WP_ADMIN_PASSWORD']} --admin_email={os.environ['WP_ADMIN_EMAIL']} --path=/var/www/html --allow-root", shell=True, check=True)
+    subprocess.run("service php7.4-fpm stop", shell=True, check=True)
     subprocess.run(f"/usr/sbin/php-fpm7.4 -F", shell=True, check=True)
 except KeyboardInterrupt:
     sys.exit(0)

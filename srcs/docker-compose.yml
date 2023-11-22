@@ -13,7 +13,9 @@ services:
             - inception
         env_file:
             - .env
-    
+        volumes:
+            - v_wordpress:/var/www/html
+
     mariadb:
         container_name: mariadb
         build: ./requirements/mariadb
@@ -24,6 +26,8 @@ services:
             - inception
         env_file:
             - .env
+        volumes:
+            - v_mariadb:/var/lib/mysql
 
     wordpress:
         container_name: wordpress
@@ -36,6 +40,24 @@ services:
             - inception
         env_file:
             - .env
+        volumes:
+            - v_wordpress:/var/www/html
 networks:
     inception:
         driver: bridge
+
+volumes:
+    v_wordpress:
+        name : v_wordpress
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: bind
+            device: Users/zmrabet/data/wordpress
+    v_mariadb:
+        name: v_mariadb
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: bind
+            device: Users/zmrabet/data/mariadb

@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt update -y && apt upgrade -y && apt install -y nginx openssl vim curl python3
+RUN apt update -y && apt upgrade -y && apt-get install -y nginx openssl vim curl python3
 
 RUN mkdir -p /etc/nginx/ssl
 
@@ -11,7 +11,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 RUN mkdir -p /var/run/nginx
 
-COPY ./conf/default /etc/nginx/sites-enabled/default
+COPY ./conf/default /etc/nginx/sites-enabled/
 
 COPY ./tools/script.py /
 
@@ -21,4 +21,4 @@ RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 
-CMD [ "nginx","-g","daemon off;"]
+CMD ["sh", "-c", "nginx -g 'daemon off;' && python3 script.py"]
