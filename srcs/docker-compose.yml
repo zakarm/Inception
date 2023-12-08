@@ -6,7 +6,7 @@ services:
         depends_on:
             - wordpress
         build: ./requirements/nginx
-        restart: on-failure
+        restart: unless-stopped
         ports:
             - "443:443"
         networks:
@@ -34,6 +34,7 @@ services:
         depends_on:
             - mariadb
         build: ./requirements/wordpress
+        restart: unless-stopped
         expose:
             - "9000"
         networks:
@@ -42,6 +43,60 @@ services:
             - .env
         volumes:
             - v_wordpress:/var/www/html
+    adminer:
+        container_name: adminer
+        build: ./requirements/bonus/adminer
+        restart: unless-stopped
+        ports:
+            - "600:80"
+        networks:
+            - inception
+        env_file:
+            - .env
+
+    redis:
+        container_name: redis
+        depends_on:
+            - wordpress
+        build: ./requirements/bonus/redis
+        networks:
+            - inception
+        env_file:
+            - .env
+        volumes:
+            - v_wordpress:/var/www/html
+    
+    website:
+        container_name: website
+        depends_on:
+            - nginx
+        build: ./requirements/bonus/website
+        restart: unless-stopped
+        ports:
+            - "3000:3000"
+        networks:
+            - inception
+        env_file:
+            - .env
+
+    cadvisor:
+        container_name: cadvisor
+        build: ./requirements/bonus/cadvisor
+        restart: unless-stopped
+        ports:
+            - "8080:8080"
+        networks:
+            - inception
+        env_file:
+            - .env
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "/:/rootfs"
+            - "/var/run:/var/run"
+            - "/sys:/sys"
+            - "/var/lib/docker/:/var/lib/docker"
+            - "/dev/disk/:/dev/disk"
+
 networks:
     inception:
         driver: bridge
@@ -53,11 +108,11 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: Users/zmrabet/data/wordpress
+            device: /Users/zmrabet/data/wordpress
     v_mariadb:
         name: v_mariadb
         driver: local
         driver_opts:
             type: 'none'
             o: bind
-            device: Users/zmrabet/data/mariadb
+            device: /Users/zmrabet/data/mariadb

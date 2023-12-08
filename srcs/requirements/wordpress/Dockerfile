@@ -1,9 +1,11 @@
 FROM debian:bullseye
 
 RUN apt update -y && apt upgrade -y && apt-get -y install wordpress curl sendmail python3 \
-                    php php-fpm  php-mysql mariadb-client
+                    php php-fpm php-redis php-mysql mariadb-client
 
-RUN  chown -R www-data:www-data /var/www/html/
+RUN chmod 777 /var/www/html
+
+RUN chown -R www-data:www-data /var/www/html
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \ 
                 chmod +x wp-cli.phar && \

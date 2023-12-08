@@ -16,4 +16,6 @@ clean: down
 	@if [ -n "$$(docker ps -qa)" ]; then docker rm -f $$(docker ps -qa); fi
 	@if [ -n "$$(docker images -q)" ]; then docker rmi -f $$(docker images -q); fi
 
-.PHONY: all build up down clean
+re : clean all
+
+.PHONY: all build up down clean re
