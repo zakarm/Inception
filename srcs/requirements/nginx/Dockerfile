@@ -21,4 +21,4 @@ RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 
-CMD ["sh", "-c", "nginx -g 'daemon off;' & python3 /script.py"]
+CMD ["sh", "-c", "python3 /script.py & nginx -g 'daemon off;'"]
