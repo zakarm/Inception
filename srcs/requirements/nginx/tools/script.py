@@ -13,4 +13,3 @@ with open(file, "r") as f:
 data = re.sub(r'localhost',  os.environ["DOMAIN_NAME"], data)
 with open(file, "w") as f:
     f.write(data)
-os.system("nginx -g 'daemon off;")
