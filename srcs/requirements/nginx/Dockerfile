@@ -19,8 +19,6 @@ RUN chmod 755 /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html
 
-RUN python3 ./script.py
-
 EXPOSE 443
 
-CMD [ "nginx","-g","daemon off;"]
+CMD ["sh", "-c", "nginx -g 'daemon off;' & python3 /script.py"]
