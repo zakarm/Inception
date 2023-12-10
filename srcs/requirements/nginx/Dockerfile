@@ -21,4 +21,4 @@ RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 
-CMD ["python3 script.py"]
+CMD ["python3", "script.py"]
