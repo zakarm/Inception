@@ -108,11 +108,11 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/zmrabet/data/wordpress
+            device: /home/zmrabet/data/wordpress
     v_mariadb:
         name: v_mariadb
         driver: local
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/zmrabet/data/mariadb
+            device: /home/zmrabet/data/mariadb
