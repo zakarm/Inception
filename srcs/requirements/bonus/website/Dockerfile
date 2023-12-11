@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt update -y && apt upgrade -y && apt-get install nginx
+RUN apt update -y && apt upgrade -y && apt-get install nginx -y
 
 RUN mkdir -p /var/www/html
 
