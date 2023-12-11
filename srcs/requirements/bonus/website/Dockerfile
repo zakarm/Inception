@@ -6,6 +6,8 @@ RUN mkdir -p /var/www/html
 
 COPY ./conf/index.html /var/www/html/
 
+COPY ./tools/script.py /
+
 RUN chmod 755 /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html/
