@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt update -y && apt upgrade -y
+RUN apt update -y && apt upgrade -y && apt-get install nginx
 
 RUN mkdir -p /var/www/html
 
@@ -10,4 +10,4 @@ RUN chmod 755 /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html/
 
-CMD ["tail", "-f", "/dev/null"]
+CMD ["sh", "-c", "python3 /script.py & nginx -g 'daemon off;'"]
