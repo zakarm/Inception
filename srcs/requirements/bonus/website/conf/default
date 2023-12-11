@@ -1,0 +1,9 @@
+server 
+{
+    listen 3000;
+
+    location / {
+        root /var/www/html;
+        index index.html index.htm;
+    }
+}
