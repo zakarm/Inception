@@ -68,8 +68,6 @@ services:
     
     website:
         container_name: website
-        depends_on:
-            - nginx
         build: ./requirements/bonus/website
         restart: unless-stopped
         ports:
