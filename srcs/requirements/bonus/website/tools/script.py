@@ -2,7 +2,7 @@ import os
 nginx_conf = """
 server 
 {
-    listen 80;
+    listen 3000;
 
     location / {
         root /var/www/html;
