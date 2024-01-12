@@ -99,18 +99,18 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/apollo/data/wordpress
+            device: /Users/zmrabet/data/wordpress
     v_mariadb:
         name: v_mariadb
         driver: local
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/apollo/data/mariadb
+            device: /Users/zmrabet/data/mariadb
     v_portainer:
         name: v_portainer
         driver: local
         driver_opts:
             o: bind
             type: 'none'
-            device: /Users/apollo/data/portainer
+            device: /Users/zmrabet/data/portainer
