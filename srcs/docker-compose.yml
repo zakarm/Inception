@@ -43,6 +43,7 @@ services:
             - .env
         volumes:
             - v_wordpress:/var/www/html
+
     adminer:
         container_name: adminer
         build: ./requirements/bonus/adminer
@@ -76,24 +77,16 @@ services:
             - inception
         env_file:
             - .env
-
-    cadvisor:
-        container_name: cadvisor
-        build: ./requirements/bonus/cadvisor
-        restart: unless-stopped
+    
+    portainer:
+        container_name: portainer
+        build: ./requirements/bonus/portainer
+        restart: always
         ports:
-            - "8080:8080"
-        networks:
-            - inception
-        env_file:
-            - .env
+            - "9000:9000"
         volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-            - "/:/rootfs"
-            - "/var/run:/var/run"
-            - "/sys:/sys"
-            - "/var/lib/docker/:/var/lib/docker"
-            - "/dev/disk/:/dev/disk"
+            - v_portainer:/data
+            - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
     inception:
@@ -106,11 +99,18 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /home/zmrabet/data/wordpress
+            device: /Users/apollo/data/wordpress
     v_mariadb:
         name: v_mariadb
         driver: local
         driver_opts:
             type: 'none'
             o: bind
-            device: /home/zmrabet/data/mariadb
+            device: /Users/apollo/data/mariadb
+    v_portainer:
+        name: v_portainer
+        driver: local
+        driver_opts:
+            o: bind
+            type: 'none'
+            device: /Users/apollo/data/portainer

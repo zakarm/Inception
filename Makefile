@@ -7,7 +7,7 @@ build :
 	$(DC) -f $(DC_FILE) build
 
 up :
-	$(DC) -f $(DC_FILE) up -d
+	$(DC) -f $(DC_FILE) up
 
 down :
 	$(DC) -f $(DC_FILE) down
@@ -16,6 +16,9 @@ clean: down
 	@if [ -n "$$(docker ps -qa)" ]; then docker rm -f $$(docker ps -qa); fi
 	@if [ -n "$$(docker images -q)" ]; then docker rmi -f $$(docker images -q); fi
 
-re : clean all
+fclean: clean
+	@docker system prune -af --volumes
+
+re : fclean all
 
 .PHONY: all build up down clean re

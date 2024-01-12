@@ -1,7 +1,6 @@
 import os, sys, time, subprocess, re
 
 time.sleep (5)
-
 try:
     subprocess.run("service	php7.4-fpm start", shell = True, check = True)
     file = "/etc/php/7.4/fpm/pool.d/www.conf"
