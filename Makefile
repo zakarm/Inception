@@ -10,14 +10,18 @@ up :
 	$(DC) -f $(DC_FILE) up
 
 down :
-	$(DC) -f $(DC_FILE) down
+	$(DC) -f $(DC_FILE) down -v
 
 clean: down
 	@if [ -n "$$(docker ps -qa)" ]; then docker rm -f $$(docker ps -qa); fi
 	@if [ -n "$$(docker images -q)" ]; then docker rmi -f $$(docker images -q); fi
 
 fclean: clean
-	@docker system prune -af --volumes
+	@rm -rf /Users/$(shell whoami)/data/mariadb/*
+	@rm -rf /Users/$(shell whoami)/data/wordpress/*
+	@rm -rf /Users/$(shell whoami)/data/portainer/*
+	@docker system prune -af
+	@docker volume prune --all -af
 
 re : fclean all
 
