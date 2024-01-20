@@ -1,28 +1,28 @@
-DC = docker-compose
-DC_FILE = ./srcs/docker-compose.yml
+DC 		= docker-compose
+DC_YML	= ./srcs/docker-compose.yml
+PROJECT = inception
 
-all: build up
-
-build :
-	$(DC) -f $(DC_FILE) build
+all: up
 
 up :
-	$(DC) -f $(DC_FILE) up
+	$(DC) -f $(DC_YML) --project-name $(PROJECT) up --build
 
-down :
-	$(DC) -f $(DC_FILE) down -v
+start : 
+	$(DC) -f $(DC_YML) --project-name $(PROJECT) start
 
-clean: down
-	@if [ -n "$$(docker ps -qa)" ]; then docker rm -f $$(docker ps -qa); fi
-	@if [ -n "$$(docker images -q)" ]; then docker rmi -f $$(docker images -q); fi
+stop :
+	$(DC) -f $(DC_YML) --project-name $(PROJECT) stop
 
-fclean: clean
-	@rm -rf /Users/$(shell whoami)/data/mariadb/*
-	@rm -rf /Users/$(shell whoami)/data/wordpress/*
-	@rm -rf /Users/$(shell whoami)/data/portainer/*
-	@docker system prune -af
-	@docker volume prune --all -af
+down : stop
+	$(DC) -f $(DC_YML) --project-name $(PROJECT) down --rmi all --volumes --remove-orphans
 
-re : fclean all
+status :
+	docker ps
 
-.PHONY: all build up down clean re
+prune : down
+	docker system prune -af
+
+network :
+	docker network inspect inception
+
+.PHONY: all build up stop down clean re

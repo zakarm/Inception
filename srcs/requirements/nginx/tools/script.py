@@ -1,13 +1,14 @@
-import os, re
+from re import sub
+from os import environ
 file = "/etc/nginx/sites-enabled/default"
 with open(file, "r") as f:
     data = f.read()
-data = re.sub(r'/etc/nginx/ssl/',  os.environ["CERTS_"], data) 
+data = sub(r'/etc/nginx/ssl/',  environ["CERTS_"], data) 
 with open(file, "w") as f:
     f.write(data)
 data = ""
 with open(file, "r") as f:
     data = f.read()
-data = re.sub(r'localhost',  os.environ["DOMAIN_NAME"], data)
+data = sub(r'localhost',  environ["DOMAIN_NAME"], data)
 with open(file, "w") as f:
     f.write(data)

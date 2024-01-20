@@ -3,10 +3,13 @@ version: '3.8'
 services:
     nginx:
         container_name: nginx
+        image: nginx
         depends_on:
             - wordpress
-        build: ./requirements/nginx
-        restart: unless-stopped
+        build:
+            context: ./requirements/nginx
+            dockerfile: Dockerfile
+        restart: on-failure
         ports:
             - "443:443"
         networks:
@@ -18,8 +21,11 @@ services:
 
     mariadb:
         container_name: mariadb
-        build: ./requirements/mariadb
-        restart: unless-stopped
+        image: mariadb
+        build: 
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile
+        restart: on-failure
         expose:
             - "3306"
         networks:
@@ -31,10 +37,13 @@ services:
 
     wordpress:
         container_name: wordpress
+        image: wordpress
         depends_on:
             - mariadb
-        build: ./requirements/wordpress
-        restart: unless-stopped
+        build: 
+            context: ./requirements/wordpress
+            dockerfile: Dockerfile
+        restart: on-failure
         expose:
             - "9000"
         networks:
@@ -46,8 +55,13 @@ services:
 
     adminer:
         container_name: adminer
-        build: ./requirements/bonus/adminer
-        restart: unless-stopped
+        image: adminer
+        build: 
+            context: ./requirements/bonus/adminer
+            dockerfile: Dockerfile
+        depends_on:
+            - mariadb
+        restart: on-failure
         ports:
             - "600:80"
         networks:
@@ -57,9 +71,13 @@ services:
 
     redis:
         container_name: redis
+        image: redis
+        build: 
+            context: ./requirements/bonus/redis
+            dockerfile: Dockerfile
         depends_on:
             - wordpress
-        build: ./requirements/bonus/redis
+        restart: on-failure
         networks:
             - inception
         env_file:
@@ -69,8 +87,11 @@ services:
     
     website:
         container_name: website
-        build: ./requirements/bonus/website
-        restart: unless-stopped
+        image: website
+        build: 
+            context: ./requirements/bonus/website
+            dockerfile: Dockerfile
+        restart: on-failure
         ports:
             - "3000:3000"
         networks:
@@ -80,16 +101,22 @@ services:
     
     portainer:
         container_name: portainer
-        build: ./requirements/bonus/portainer
-        restart: always
+        image: portainer
+        build: 
+            context: ./requirements/bonus/portainer
+            dockerfile: Dockerfile
+        restart: on-failure
         ports:
             - "9000:9000"
+        networks:
+            - inception
         volumes:
             - v_portainer:/data
             - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
     inception:
+        name: inception
         driver: bridge
 
 volumes:
@@ -99,18 +126,20 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/apollo/data/wordpress
+            device: /Users/zmrabet/data/wordpress
+
     v_mariadb:
         name: v_mariadb
         driver: local
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/apollo/data/mariadb
+            device: /Users/zmrabet/data/mariadb
+
     v_portainer:
         name: v_portainer
         driver: local
         driver_opts:
             o: bind
             type: 'none'
-            device: /Users/apollo/data/portainer
+            device: /Users/zmrabet/data/portainer

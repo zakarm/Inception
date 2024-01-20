@@ -1,21 +1,22 @@
 from time import sleep
 from os import environ, system
-import subprocess, re
+from re import sub
+import subprocess
 
 sleep (10)
 system("service	php7.4-fpm start")
 file = "/etc/php/7.4/fpm/pool.d/www.conf"
 with open(file, "r") as f: 
     data = f.read()
-data = re.sub(r'listen = /run/php/php7.4-fpm.sock', "listen = 9000", data)
+data = sub(r'listen = /run/php/php7.4-fpm.sock', "listen = 9000", data)
 with open(file, "w") as f: 
     f.write(data)
 file = "/var/www/html/wp-config.php"
 with open(file, "r") as f: 
     data = f.read()
-data = re.sub(r'database_name_here', environ['MYSQL_DATABASE_NAME'], data)
-data = re.sub(r'username_here', environ['MYSQL_USER'], data)
-data = re.sub(r'password_here', environ['MYSQL_PASSWORD'], data)
+data = sub(r'database_name_here', environ['MYSQL_DATABASE_NAME'], data)
+data = sub(r'username_here', environ['MYSQL_USER'], data)
+data = sub(r'password_here', environ['MYSQL_PASSWORD'], data)
 
 with open(file, "w") as f: 
     f.write(data)
