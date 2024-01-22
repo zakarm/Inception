@@ -3,7 +3,7 @@ from os import environ, system
 from re import sub
 import subprocess
 
-sleep (10)
+sleep (7)
 system("service	php7.4-fpm start")
 file = "/etc/php/7.4/fpm/pool.d/www.conf"
 with open(file, "r") as f: 

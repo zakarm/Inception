@@ -1,5 +1,6 @@
 from re import sub
-from os import environ
+from os import environ, system
+
 file = "/etc/nginx/sites-enabled/default"
 with open(file, "r") as f:
     data = f.read()
@@ -12,3 +13,4 @@ with open(file, "r") as f:
 data = sub(r'localhost',  environ["DOMAIN_NAME"], data)
 with open(file, "w") as f:
     f.write(data)
+system("nginx -g 'daemon off;'")
