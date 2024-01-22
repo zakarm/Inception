@@ -126,7 +126,7 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/apollo/data/wordpress
+            device: /home/zmrabet/data/wordpress
 
     v_mariadb:
         name: v_mariadb
@@ -134,7 +134,7 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /Users/apollo/data/mariadb
+            device: /home/zmrabet/data/mariadb
 
     v_portainer:
         name: v_portainer
@@ -142,4 +142,4 @@ volumes:
         driver_opts:
             o: bind
             type: 'none'
-            device: /Users/apollo/data/portainer
+            device: /home/zmrabet/data/portainer
