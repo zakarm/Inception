@@ -13,4 +13,4 @@ RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html/
 
 COPY ./conf/default /etc/nginx/sites-enabled/
 
-CMD ["sh", "-c", "nginx -g 'daemon off;'"]
+CMD [ "nginx","-g","daemon off;"]

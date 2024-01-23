@@ -84,7 +84,7 @@ services:
             - .env
         volumes:
             - v_wordpress:/var/www/html
-    
+
     website:
         container_name: website
         image: website
@@ -98,7 +98,7 @@ services:
             - inception
         env_file:
             - .env
-    
+
     portainer:
         container_name: portainer
         image: portainer
@@ -110,6 +110,8 @@ services:
             - "9000:9000"
         networks:
             - inception
+        env_file:
+            - .env
         volumes:
             - v_portainer:/data
             - /var/run/docker.sock:/var/run/docker.sock
@@ -126,7 +128,7 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /home/zmrabet/data/wordpress
+            device: /Users/${USER}/data/wordpress
 
     v_mariadb:
         name: v_mariadb
@@ -134,7 +136,7 @@ volumes:
         driver_opts:
             type: 'none'
             o: bind
-            device: /home/zmrabet/data/mariadb
+            device: /Users/${USER}/data/mariadb
 
     v_portainer:
         name: v_portainer
@@ -142,4 +144,4 @@ volumes:
         driver_opts:
             o: bind
             type: 'none'
-            device: /home/zmrabet/data/portainer
+            device: /Users/${USER}/data/portainer
