@@ -122,9 +122,22 @@ considered build-time constructs, whereas containers are run-time constructs.
 
 >>> - Images and Layers: Docker images are composed of layers, each representing a set of changes to the filesystem. Layers are stacked on top of each other to create the final image. The docker history and docker inspect commands can be used to inspect image layers.
 
+<div align="center" style="display: flex; justify-content: space-between;">
+    <div style="flex: 50;"><img src="https://github.com/zakarm/inception/blob/main/imgs/image_layers.png" width="450" height="260"></div>
+</div>
+
 >>> - Sharing Image Layers: Multiple images can share the same layers, leading to space and performance efficiencies. Docker automatically recognizes and reuses layers when pulling similar images.
 
 >>> - Pulling Images by Digest: Docker images can also be pulled using their digest, which is a unique identifier for the image content. This ensures consistency and prevents accidental use of incorrect image versions.
+
+
+>> • The commands
+
+>>> To pull a Docker image from a registry, use the following command: ```docker image pull <image_name>:<tag>```
+>>> To list all locally available Docker images, use the following command: ```docker image ls```
+>>> To display detailed information about a specific image, use:  ```docker image inspect <image_id>```
+>>> To remove one or more Docker images from your system, use the following command:  ```docker image rm <image_name>```
+>>> 
 
 ## 3. Use docker
 ### Install docker
