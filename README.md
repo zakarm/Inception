@@ -68,7 +68,63 @@ are at least three things to be aware of when referring to Docker as a technolog
     <div style="flex: 50; text-align: right;"><img src="imgs/docker_engine_last.png" width="450" height="260"></div>
 </div>
 
+### The influence of the Open Container Initiative
+- The Open Container Initiative (OCI) defined two container-related standards: the Image spec and the Container runtime spec, both released as version 1.0 in July 2017. Stability is paramount, with minimal changes expected. The latest Image spec is v1.0.1 (November 2017), and the latest runtime spec is v1.0.2 (March 2020).
 
+- Docker, Inc. played a significant role in developing these standards, contributing extensively. Since Docker 1.11 (early 2016), the Docker engine closely adheres to OCI specifications. Container runtime code is separated from the Docker daemon, implemented in an OCI-compliant layer. Docker defaults to using runc, the reference implementation of the OCI container-runtime-spec.
+
+- Additionally, the containerd component ensures Docker images are compliant OCI bundles.
+
+### Runc
+- Runc is the primary implementation of the OCI container-runtime-spec, developed with significant input from Docker, Inc. It serves as a lightweight CLI wrapper for libcontainer, which replaced LXC in Docker's early architecture. Runc's main function is to create containers efficiently and quickly. As a standalone tool, it lacks the rich features of the Docker engine but provides bare-bones, low-level container management. This simplicity allows for easy downloading and building of the binary for experimentation with OCI containers. The layer where runc operates is often referred to as "the OCI layer".
+
+## Containerd
+
+- Docker stripped container execution logic from its daemon, creating containerd (pronounced container-dee) to manage container lifecycle operations such as start, stop, pause, and remove. Originally designed to be lightweight and focused solely on lifecycle operations, containerd now encompasses additional functionalities like image pulls, volumes, and networks.
+
+- While containerd's functionality expanded to accommodate projects like Kubernetes, its modular design allows users to select specific features. Developed by Docker, Inc., containerd was donated to the Cloud Native Computing Foundation (CNCF) and has since graduated as a fully stable CNCF project, suitable for production use. You can find the latest releases [here](link to releases).
+
+## Image
+- In this chapter we’ll dive deep into Docker images. the aim of the game is to give you a solid understanding of
+what Docker images are, how to perform basic operations, and how they work under-the-hood.
+We’ll see how to build new images with our own applications inside of them in a later chapter.
+We’ll split this chapter into the usual three parts:
+
+> • The TLDR
+
+> • The deep dive
+
+> • The commands
+
+>> • The TLDR
+
+>>> A Docker image is a self-contained package containing everything needed for an application to run, including code, dependencies, and OS constructs. It's akin to a VM template for former VM admins or a class for developers.
+
+>>> You obtain Docker images by pulling them from an image registry, with Docker Hub being the most common. Pulling downloads the image to your local Docker host for container instantiation.
+
+>>> Images consist of stacked layers, forming a single object. They contain a streamlined OS and necessary files/dependencies. Typically small in size for fast and lightweight containerization (though Microsoft images can be large).
+
+>>> Understanding Docker images gives you a foundational grasp of containerization. Ready for the mind-blowing part? Let's go! 😎
+
+>> • The deep dive
+
+>>> We’ve mentioned a couple of times already that images are like stopped containers (or classes if you’re a
+developer). In fact, you can stop a container and create a new image from it. With this in mind, images are
+considered build-time constructs, whereas containers are run-time constructs.
+
+>>> - Relationship between Images and Containers: Images are used to create containers, and once a container is started from an image, they become dependent on each other. Images cannot be deleted until the last container using it has been stopped and destroyed.
+
+>>> - Size of Images: Docker images are designed to be small, containing only the necessary code and dependencies for running a specific application or service. This results in stripped-down images without non-essential components like shells or kernels.
+
+>>> - Pulling Images: Docker images are fetched from centralized repositories called image registries, such as Docker Hub. Images are pulled onto a Docker host using the docker image pull command. Images can be tagged with different versions, and Windows-based images tend to be larger than Linux-based ones.
+
+>>> - Image Naming: Images are stored in image registries, and Docker Hub is the most common one. Official repositories contain curated images, while unofficial ones may have less reliable content. Images are named using the format <repository>:<tag>.
+
+>>> - Images and Layers: Docker images are composed of layers, each representing a set of changes to the filesystem. Layers are stacked on top of each other to create the final image. The docker history and docker inspect commands can be used to inspect image layers.
+
+>>> - Sharing Image Layers: Multiple images can share the same layers, leading to space and performance efficiencies. Docker automatically recognizes and reuses layers when pulling similar images.
+
+>>> - Pulling Images by Digest: Docker images can also be pulled using their digest, which is a unique identifier for the image content. This ensures consistency and prevents accidental use of incorrect image versions.
 
 ## 3. Use docker
 ### Install docker
@@ -78,7 +134,5 @@ Docker: Desktop for Mac provides a convenient way to run Docker and Kubernetes o
 
 
 - For 42 Student you can run the script ./init_docker.sh inside this repo https://github.com/alexandregv/42toolbox.git to use docker in goinfre !
-
-
 
 
