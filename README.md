@@ -134,10 +134,13 @@ considered build-time constructs, whereas containers are run-time constructs.
 >> • The commands
 
 >>> To pull a Docker image from a registry, use the following command: ```docker image pull <image_name>:<tag>```
+
 >>> To list all locally available Docker images, use the following command: ```docker image ls```
+
 >>> To display detailed information about a specific image, use:  ```docker image inspect <image_id>```
+
 >>> To remove one or more Docker images from your system, use the following command:  ```docker image rm <image_name>```
->>> 
+
 
 ## 3. Use docker
 ### Install docker
