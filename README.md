@@ -96,7 +96,7 @@ We’ll split this chapter into the usual three parts:
 
 > • The commands
 
->> • The TLDR
+>> • The TLDR :
 
 >>> A Docker image is a self-contained package containing everything needed for an application to run, including code, dependencies, and OS constructs. It's akin to a VM template for former VM admins or a class for developers.
 
@@ -106,7 +106,7 @@ We’ll split this chapter into the usual three parts:
 
 >>> Understanding Docker images gives you a foundational grasp of containerization. Ready for the mind-blowing part? Let's go! 😎
 
->> • The deep dive
+>> • The deep dive :
 
 >>> We’ve mentioned a couple of times already that images are like stopped containers (or classes if you’re a
 developer). In fact, you can stop a container and create a new image from it. With this in mind, images are
@@ -131,7 +131,7 @@ considered build-time constructs, whereas containers are run-time constructs.
 >>> - Pulling Images by Digest: Docker images can also be pulled using their digest, which is a unique identifier for the image content. This ensures consistency and prevents accidental use of incorrect image versions.
 
 
->> • The commands
+>> • The commands :
 
 >>> To pull a Docker image from a registry, use the following command: ```docker image pull <image_name>:<tag>```
 
