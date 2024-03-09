@@ -78,13 +78,13 @@ are at least three things to be aware of when referring to Docker as a technolog
 ### Runc
 - Runc is the primary implementation of the OCI container-runtime-spec, developed with significant input from Docker, Inc. It serves as a lightweight CLI wrapper for libcontainer, which replaced LXC in Docker's early architecture. Runc's main function is to create containers efficiently and quickly. As a standalone tool, it lacks the rich features of the Docker engine but provides bare-bones, low-level container management. This simplicity allows for easy downloading and building of the binary for experimentation with OCI containers. The layer where runc operates is often referred to as "the OCI layer".
 
-## Containerd
+### Containerd
 
 - Docker stripped container execution logic from its daemon, creating containerd (pronounced container-dee) to manage container lifecycle operations such as start, stop, pause, and remove. Originally designed to be lightweight and focused solely on lifecycle operations, containerd now encompasses additional functionalities like image pulls, volumes, and networks.
 
 - While containerd's functionality expanded to accommodate projects like Kubernetes, its modular design allows users to select specific features. Developed by Docker, Inc., containerd was donated to the Cloud Native Computing Foundation (CNCF) and has since graduated as a fully stable CNCF project, suitable for production use. You can find the latest releases [here](link to releases).
 
-## Image
+### Image
 - In this chapter we’ll dive deep into Docker images. the aim of the game is to give you a solid understanding of
 what Docker images are, how to perform basic operations, and how they work under-the-hood.
 We’ll see how to build new images with our own applications inside of them in a later chapter.
